@@ -1,0 +1,24 @@
+[2023-09-15T10:22:39.484+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: cinlok2.insert_into_artist_revenue manual__2023-09-15T10:22:36.048923+00:00 [queued]>
+[2023-09-15T10:22:39.891+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: cinlok2.insert_into_artist_revenue manual__2023-09-15T10:22:36.048923+00:00 [queued]>
+[2023-09-15T10:22:39.892+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 2
+[2023-09-15T10:22:39.943+0000] {taskinstance.py:1350} INFO - Executing <Task(GenericTransfer): insert_into_artist_revenue> on 2023-09-15 10:22:36.048923+00:00
+[2023-09-15T10:22:39.960+0000] {standard_task_runner.py:57} INFO - Started process 2946 to run task
+[2023-09-15T10:22:39.973+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'cinlok2', 'insert_into_artist_revenue', 'manual__2023-09-15T10:22:36.048923+00:00', '--job-id', '17', '--raw', '--subdir', 'DAGS_FOLDER/revenue.py', '--cfg-path', '/tmp/tmpkxa2io82']
+[2023-09-15T10:22:39.983+0000] {standard_task_runner.py:85} INFO - Job 17: Subtask insert_into_artist_revenue
+[2023-09-15T10:22:40.138+0000] {task_command.py:410} INFO - Running <TaskInstance: cinlok2.insert_into_artist_revenue manual__2023-09-15T10:22:36.048923+00:00 [running]> on host 808631ad8fb6
+[2023-09-15T10:22:40.405+0000] {taskinstance.py:1570} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aldinoharyo' AIRFLOW_CTX_DAG_ID='cinlok2' AIRFLOW_CTX_TASK_ID='insert_into_artist_revenue' AIRFLOW_CTX_EXECUTION_DATE='2023-09-15T10:22:36.048923+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-09-15T10:22:36.048923+00:00'
+[2023-09-15T10:22:40.479+0000] {taskinstance.py:1847} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/generic_transfer.py", line 74, in execute
+    source_hook = BaseHook.get_hook(self.source_conn_id)
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/hooks/base.py", line 84, in get_hook
+    connection = cls.get_connection(conn_id)
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/hooks/base.py", line 72, in get_connection
+    conn = Connection.get_connection_from_secrets(conn_id)
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/models/connection.py", line 434, in get_connection_from_secrets
+    raise AirflowNotFoundException(f"The conn_id `{conn_id}` isn't defined")
+airflow.exceptions.AirflowNotFoundException: The conn_id `postgres` isn't defined
+[2023-09-15T10:22:40.498+0000] {taskinstance.py:1373} INFO - Marking task as UP_FOR_RETRY. dag_id=cinlok2, task_id=insert_into_artist_revenue, execution_date=20230915T102236, start_date=20230915T102239, end_date=20230915T102240
+[2023-09-15T10:22:40.550+0000] {standard_task_runner.py:109} ERROR - Failed to execute job 17 for task insert_into_artist_revenue (The conn_id `postgres` isn't defined; 2946)
+[2023-09-15T10:22:40.588+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 1
+[2023-09-15T10:22:40.674+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,46 @@
+[2023-09-15T12:26:12.359+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: business_question.city_with_most_purchases manual__2023-09-15T12:21:02.572854+00:00 [queued]>
+[2023-09-15T12:26:12.369+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: business_question.city_with_most_purchases manual__2023-09-15T12:21:02.572854+00:00 [queued]>
+[2023-09-15T12:26:12.370+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 2
+[2023-09-15T12:26:12.384+0000] {taskinstance.py:1350} INFO - Executing <Task(GenericTransfer): city_with_most_purchases> on 2023-09-15 12:21:02.572854+00:00
+[2023-09-15T12:26:12.391+0000] {standard_task_runner.py:57} INFO - Started process 1858 to run task
+[2023-09-15T12:26:12.395+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'business_question', 'city_with_most_purchases', 'manual__2023-09-15T12:21:02.572854+00:00', '--job-id', '32', '--raw', '--subdir', 'DAGS_FOLDER/businesse.py', '--cfg-path', '/tmp/tmpy4hs51l4']
+[2023-09-15T12:26:12.398+0000] {standard_task_runner.py:85} INFO - Job 32: Subtask city_with_most_purchases
+[2023-09-15T12:26:12.451+0000] {task_command.py:410} INFO - Running <TaskInstance: business_question.city_with_most_purchases manual__2023-09-15T12:21:02.572854+00:00 [running]> on host 7b2f04a25b74
+[2023-09-15T12:26:12.550+0000] {taskinstance.py:1570} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aldinoharyo' AIRFLOW_CTX_DAG_ID='business_question' AIRFLOW_CTX_TASK_ID='city_with_most_purchases' AIRFLOW_CTX_EXECUTION_DATE='2023-09-15T12:21:02.572854+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-09-15T12:21:02.572854+00:00'
+[2023-09-15T12:26:12.563+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T12:26:12.630+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:26:12.679+0000] {generic_transfer.py:77} INFO - Extracting data from destination
+[2023-09-15T12:26:12.680+0000] {generic_transfer.py:78} INFO - Executing: 
+ 
+    SELECT "City", COUNT("InvoiceId") as "TotalPurchases"
+    FROM "transactions"
+    GROUP BY "City"
+    ORDER BY "TotalPurchases" DESC
+    
+[2023-09-15T12:26:12.688+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T12:26:12.693+0000] {sql.py:375} INFO - Running statement: 
+    SELECT "City", COUNT("InvoiceId") as "TotalPurchases"
+    FROM "transactions"
+    GROUP BY "City"
+    ORDER BY "TotalPurchases" DESC
+    , parameters: None
+[2023-09-15T12:26:12.696+0000] {sql.py:384} INFO - Rows affected: 53
+[2023-09-15T12:26:12.697+0000] {generic_transfer.py:95} INFO - Running preoperator
+[2023-09-15T12:26:12.698+0000] {generic_transfer.py:96} INFO - ['DROP TABLE IF EXISTS question4', '\n        CREATE TABLE question4 (\n        \n        "City" VARCHAR,\n        "TotalPurchases" NUMERIC(10,2) NOT NULL\n        \n    \n        )\n        ']
+[2023-09-15T12:26:12.706+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:26:12.711+0000] {sql.py:375} INFO - Running statement: DROP TABLE IF EXISTS question4, parameters: None
+[2023-09-15T12:26:12.713+0000] {sql.py:375} INFO - Running statement: 
+        CREATE TABLE question4 (
+        
+        "City" VARCHAR,
+        "TotalPurchases" NUMERIC(10,2) NOT NULL
+        
+    
+        )
+        , parameters: None
+[2023-09-15T12:26:12.721+0000] {generic_transfer.py:105} INFO - Inserting rows into final_destination
+[2023-09-15T12:26:12.731+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:26:12.758+0000] {sql.py:473} INFO - Done loading. Loaded a total of 53 rows into question4
+[2023-09-15T12:26:12.773+0000] {taskinstance.py:1373} INFO - Marking task as SUCCESS. dag_id=business_question, task_id=city_with_most_purchases, execution_date=20230915T122102, start_date=20230915T122612, end_date=20230915T122612
+[2023-09-15T12:26:12.808+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 0
+[2023-09-15T12:26:12.829+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check

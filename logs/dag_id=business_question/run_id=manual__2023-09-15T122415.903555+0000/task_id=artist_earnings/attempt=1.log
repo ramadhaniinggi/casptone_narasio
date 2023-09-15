@@ -1,0 +1,53 @@
+[2023-09-15T12:24:23.197+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: business_question.artist_earnings manual__2023-09-15T12:24:15.903555+00:00 [queued]>
+[2023-09-15T12:24:23.212+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: business_question.artist_earnings manual__2023-09-15T12:24:15.903555+00:00 [queued]>
+[2023-09-15T12:24:23.213+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 2
+[2023-09-15T12:24:23.234+0000] {taskinstance.py:1350} INFO - Executing <Task(GenericTransfer): artist_earnings> on 2023-09-15 12:24:15.903555+00:00
+[2023-09-15T12:24:23.245+0000] {standard_task_runner.py:57} INFO - Started process 1786 to run task
+[2023-09-15T12:24:23.249+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'business_question', 'artist_earnings', 'manual__2023-09-15T12:24:15.903555+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/businesse.py', '--cfg-path', '/tmp/tmp8ffx7s17']
+[2023-09-15T12:24:23.254+0000] {standard_task_runner.py:85} INFO - Job 20: Subtask artist_earnings
+[2023-09-15T12:24:23.332+0000] {task_command.py:410} INFO - Running <TaskInstance: business_question.artist_earnings manual__2023-09-15T12:24:15.903555+00:00 [running]> on host 7b2f04a25b74
+[2023-09-15T12:24:23.505+0000] {taskinstance.py:1570} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aldinoharyo' AIRFLOW_CTX_DAG_ID='business_question' AIRFLOW_CTX_TASK_ID='artist_earnings' AIRFLOW_CTX_EXECUTION_DATE='2023-09-15T12:24:15.903555+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-09-15T12:24:15.903555+00:00'
+[2023-09-15T12:24:23.519+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T12:24:23.619+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:24:23.683+0000] {generic_transfer.py:77} INFO - Extracting data from destination
+[2023-09-15T12:24:23.684+0000] {generic_transfer.py:78} INFO - Executing: 
+ 
+    SELECT "ArtistId", "ArtistName", SUM("TotalPrice") as "Earnings"
+    FROM "artist_revenue"
+    GROUP BY "ArtistId", "ArtistName"
+    ORDER BY "Earnings" DESC
+    
+[2023-09-15T12:24:23.694+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T12:24:23.699+0000] {sql.py:375} INFO - Running statement: 
+    SELECT "ArtistId", "ArtistName", SUM("TotalPrice") as "Earnings"
+    FROM "artist_revenue"
+    GROUP BY "ArtistId", "ArtistName"
+    ORDER BY "Earnings" DESC
+    , parameters: None
+[2023-09-15T12:24:23.704+0000] {sql.py:384} INFO - Rows affected: 165
+[2023-09-15T12:24:23.706+0000] {generic_transfer.py:95} INFO - Running preoperator
+[2023-09-15T12:24:23.706+0000] {generic_transfer.py:96} INFO - ['DROP TABLE IF EXISTS question3', '\n        CREATE TABLE question3 (\n        "ArtistId" INT NOT NULL,\n        "ArtistName" VARCHAR(70),\n        "Earnings" NUMERIC(10,2) NOT NULL\n        )\n        ']
+[2023-09-15T12:24:23.714+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:24:23.719+0000] {sql.py:375} INFO - Running statement: DROP TABLE IF EXISTS question3, parameters: None
+[2023-09-15T12:24:23.721+0000] {sql.py:375} INFO - Running statement: 
+        CREATE TABLE question3 (
+        "ArtistId" INT NOT NULL,
+        "ArtistName" VARCHAR(70),
+        "Earnings" NUMERIC(10,2) NOT NULL
+        )
+        , parameters: None
+[2023-09-15T12:24:23.724+0000] {generic_transfer.py:105} INFO - Inserting rows into final_destination
+[2023-09-15T12:24:23.731+0000] {base.py:73} INFO - Using connection ID 'final_destination' for task execution.
+[2023-09-15T12:24:23.761+0000] {taskinstance.py:1847} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/operators/generic_transfer.py", line 106, in execute
+    insert_rows(table=self.destination_table, rows=results, **self.insert_args)
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/common/sql/hooks/sql.py", line 467, in insert_rows
+    cur.execute(sql, values)
+psycopg2.errors.StringDataRightTruncation: value too long for type character varying(70)
+
+[2023-09-15T12:24:23.772+0000] {taskinstance.py:1373} INFO - Marking task as UP_FOR_RETRY. dag_id=business_question, task_id=artist_earnings, execution_date=20230915T122415, start_date=20230915T122423, end_date=20230915T122423
+[2023-09-15T12:24:23.787+0000] {standard_task_runner.py:109} ERROR - Failed to execute job 20 for task artist_earnings (value too long for type character varying(70)
+; 1786)
+[2023-09-15T12:24:23.823+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 1
+[2023-09-15T12:24:23.869+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check

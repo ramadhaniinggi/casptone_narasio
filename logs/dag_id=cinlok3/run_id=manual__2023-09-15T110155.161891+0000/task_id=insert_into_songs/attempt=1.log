@@ -1,0 +1,78 @@
+[2023-09-15T11:01:58.810+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: cinlok3.insert_into_songs manual__2023-09-15T11:01:55.161891+00:00 [queued]>
+[2023-09-15T11:01:59.182+0000] {taskinstance.py:1125} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: cinlok3.insert_into_songs manual__2023-09-15T11:01:55.161891+00:00 [queued]>
+[2023-09-15T11:01:59.187+0000] {taskinstance.py:1331} INFO - Starting attempt 1 of 2
+[2023-09-15T11:01:59.240+0000] {taskinstance.py:1350} INFO - Executing <Task(GenericTransfer): insert_into_songs> on 2023-09-15 11:01:55.161891+00:00
+[2023-09-15T11:01:59.255+0000] {standard_task_runner.py:57} INFO - Started process 418 to run task
+[2023-09-15T11:01:59.271+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'cinlok3', 'insert_into_songs', 'manual__2023-09-15T11:01:55.161891+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/songs.py', '--cfg-path', '/tmp/tmplrhcuy5b']
+[2023-09-15T11:01:59.280+0000] {standard_task_runner.py:85} INFO - Job 6: Subtask insert_into_songs
+[2023-09-15T11:01:59.475+0000] {task_command.py:410} INFO - Running <TaskInstance: cinlok3.insert_into_songs manual__2023-09-15T11:01:55.161891+00:00 [running]> on host 7b2f04a25b74
+[2023-09-15T11:01:59.808+0000] {taskinstance.py:1570} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Aldinoharyo' AIRFLOW_CTX_DAG_ID='cinlok3' AIRFLOW_CTX_TASK_ID='insert_into_songs' AIRFLOW_CTX_EXECUTION_DATE='2023-09-15T11:01:55.161891+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-09-15T11:01:55.161891+00:00'
+[2023-09-15T11:01:59.848+0000] {base.py:73} INFO - Using connection ID 'source' for task execution.
+[2023-09-15T11:02:00.194+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T11:02:00.441+0000] {generic_transfer.py:77} INFO - Extracting data from source
+[2023-09-15T11:02:00.446+0000] {generic_transfer.py:78} INFO - Executing: 
+ 
+SELECT a."ArtistId", 
+       a."Name", 
+       b."AlbumId",
+       b."Title",
+       c."TrackId", 
+       c."Name", 
+       c."UnitPrice",
+       c."Bytes",
+       d."GenreId",
+       d."Name"
+FROM "Artist" a
+JOIN "Album" b
+ON a."ArtistId" = b."ArtistId"
+JOIN "Track" c
+ON b."AlbumId" = c."AlbumId"
+JOIN "Genre" d
+ON c."GenreId" = d."GenreId"
+[2023-09-15T11:02:00.475+0000] {base.py:73} INFO - Using connection ID 'source' for task execution.
+[2023-09-15T11:02:00.488+0000] {sql.py:375} INFO - Running statement: 
+SELECT a."ArtistId", 
+       a."Name", 
+       b."AlbumId",
+       b."Title",
+       c."TrackId", 
+       c."Name", 
+       c."UnitPrice",
+       c."Bytes",
+       d."GenreId",
+       d."Name"
+FROM "Artist" a
+JOIN "Album" b
+ON a."ArtistId" = b."ArtistId"
+JOIN "Track" c
+ON b."AlbumId" = c."AlbumId"
+JOIN "Genre" d
+ON c."GenreId" = d."GenreId", parameters: None
+[2023-09-15T11:02:00.545+0000] {sql.py:384} INFO - Rows affected: 3503
+[2023-09-15T11:02:00.594+0000] {generic_transfer.py:95} INFO - Running preoperator
+[2023-09-15T11:02:00.596+0000] {generic_transfer.py:96} INFO - ['DROP TABLE IF EXISTS songs', '\n        CREATE TABLE songs (\n        "ArtistId" INT NOT NULL,\n        "ArtistName" VARCHAR(120),\n        "AlbumId" INT NOT NULL,\n        "AlbumTitle" VARCHAR(160) NOT NULL,\n        "TrackId" INT NOT NULL,\n        "TrackName" VARCHAR(200) NOT NULL,\n        "TrackUnitPrice" NUMERIC(10,2) NOT NULL,\n        "TrackBytes" INT,\n        "GenreId" INT NOT NULL,\n        "GenreName" VARCHAR(120)\n        )\n        ']
+[2023-09-15T11:02:00.618+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T11:02:00.630+0000] {sql.py:375} INFO - Running statement: DROP TABLE IF EXISTS songs, parameters: None
+[2023-09-15T11:02:00.640+0000] {sql.py:375} INFO - Running statement: 
+        CREATE TABLE songs (
+        "ArtistId" INT NOT NULL,
+        "ArtistName" VARCHAR(120),
+        "AlbumId" INT NOT NULL,
+        "AlbumTitle" VARCHAR(160) NOT NULL,
+        "TrackId" INT NOT NULL,
+        "TrackName" VARCHAR(200) NOT NULL,
+        "TrackUnitPrice" NUMERIC(10,2) NOT NULL,
+        "TrackBytes" INT,
+        "GenreId" INT NOT NULL,
+        "GenreName" VARCHAR(120)
+        )
+        , parameters: None
+[2023-09-15T11:02:00.695+0000] {generic_transfer.py:105} INFO - Inserting rows into destination
+[2023-09-15T11:02:00.735+0000] {base.py:73} INFO - Using connection ID 'destination' for task execution.
+[2023-09-15T11:02:01.468+0000] {sql.py:470} INFO - Loaded 1000 rows into songs so far
+[2023-09-15T11:02:02.115+0000] {sql.py:470} INFO - Loaded 2000 rows into songs so far
+[2023-09-15T11:02:02.511+0000] {sql.py:470} INFO - Loaded 3000 rows into songs so far
+[2023-09-15T11:02:02.733+0000] {sql.py:473} INFO - Done loading. Loaded a total of 3503 rows into songs
+[2023-09-15T11:02:02.756+0000] {taskinstance.py:1373} INFO - Marking task as SUCCESS. dag_id=cinlok3, task_id=insert_into_songs, execution_date=20230915T110155, start_date=20230915T110158, end_date=20230915T110202
+[2023-09-15T11:02:02.799+0000] {local_task_job_runner.py:232} INFO - Task exited with return code 0
+[2023-09-15T11:02:02.842+0000] {taskinstance.py:2674} INFO - 0 downstream tasks scheduled from follow-on schedule check
